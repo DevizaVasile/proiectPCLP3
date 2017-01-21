@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meniu>
+<mancare>
+   <nume>CIORBA DE PERISOARE CU PULPA DE PORC</nume>
+   <cantitate>70/330 gr</cantitate>
+   <pret>4,10</pret>
+</mancare>
+<mancare>
+   <nume>SUPA CREMA DE LEGUME SI CRUTOANE</nume>
+   <cantitate>400 gr</cantitate>
+   <pret>2,40</pret>
+</mancare>
+<mancare>
+   <nume>PILAF DE OREZ CU MORCOVI</nume>
+   <cantitate>300 gr</cantitate>
+   <pret>1,40</pret>
+</mancare>
+<mancare>
+   <nume>PIURE DE CARTOFI CU UNT</nume>
+   <cantitate>300 gr</cantitate>
+   <pret>1,40</pret>
+</mancare>
+<mancare>
+   <nume>CASCAVAL PANE</nume>
+   <cantitate>120 gr</cantitate>
+   <pret>3,50</pret>
+</mancare>
+<mancare>
+   <nume>CHIFTELE DIN CARNE DE PORC</nume>
+   <cantitate>130 gr</cantitate>
+   <pret>4,20</pret>
+</mancare>
+<mancare>
+   <nume>GRATAR COTLET PORC</nume>
+   <cantitate>108 gr</cantitate>
+   <pret>5,10</pret>
+</mancare>
+<mancare>
+   <nume>GRATAR PIEPT CURCAN</nume>
+   <cantitate>110 gr</cantitate>
+   <pret>4,20</pret>
+</mancare>
+<mancare>
+   <nume>MAMALIGA CU BRANZA SI SMANTANA</nume>
+   <cantitate>200/50/80 gr</cantitate>
+   <pret>2,60</pret>
+</mancare>
+<mancare>
+   <nume>IAHNIE DE FASOLE</nume>
+   <cantitate>300gr</cantitate>
+   <pret>2,40</pret>
+</mancare>
+<mancare>
+   <nume>FASOLE VERDE CU UNT SI SMANTANA</nume>
+   <cantitate>300 gr</cantitate>
+   <pret>3,20</pret>
+</mancare>
+<mancare>
+   <nume>CIUPERCI CU SMANTANA</nume>
+   <cantitate>280 gr</cantitate>
+   <pret>2,50</pret>
+</mancare>
+<mancare>
+   <nume>LEGUME LA TIGAIE</nume>
+   <cantitate>250 gr</cantitate>
+   <pret>2,60</pret>
+</mancare>
+<mancare>
+   <nume>CARTOFI CU UNT SI SMANTANA</nume>
+   <cantitate>260 gr</cantitate>
+   <pret>2,30</pret>
+</mancare>
+<mancare>
+   <nume>SPAGHETE BOLOGNEZE</nume>
+   <cantitate>300 gr</cantitate>
+   <pret>2,90</pret>
+</mancare>
+<mancare>
+   <nume>MACAROANE CU BRANZA</nume>
+   <cantitate>250 gr</cantitate>
+   <pret>1,70</pret>
+</mancare>
+<mancare>
+   <nume>GULAS CU CARNE DE CURCAN</nume>
+   <cantitate>100/200 gr</cantitate>
+   <pret>4,60</pret>
+</mancare>
+<mancare>
+   <nume>FRIPTURA COTLET PORC CU ROSII</nume>
+   <cantitate>90/200 gr</cantitate>
+   <pret>4,50</pret>
+</mancare>
+<mancare>
+   <nume>FRIPTURA CURCAN CU SOS TOMAT</nume>
+   <cantitate>110/100 gr</cantitate>
+   <pret>4,80</pret>
+</mancare>
+<mancare>
+   <nume>COTLET DE PORC ARDELENESC</nume>
+   <cantitate>80/120 gr</cantitate>
+   <pret>4,50</pret>
+</mancare>
+<mancare>
+   <nume>SALATA DE MURATURI ASORTATE</nume>
+   <cantitate>150 gr</cantitate>
+   <pret>2,20</pret>
+</mancare>
+<mancare>
+   <nume>SALATA DE CASTRAVETI IN OTET</nume>
+   <cantitate>120 gr</cantitate>
+   <pret>1,30</pret>
+</mancare>
+</meniu>
