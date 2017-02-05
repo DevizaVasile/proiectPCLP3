@@ -4,10 +4,10 @@ Universitatea Transilvania din Brasov
 Facultatea de Inginerie Electrica si Stiinta Calculatoarelor 
 Specializarea Tehnologia Informatiei , Anul 2.
 
-Proiectul dat consta in dezvoltarea unei aplicatii pentru un client real , 
-in cazul de fata este vorba despre cantina universitatii Transilvania , in 
+Proiectul dat consta in crearea si dezvoltarea unei aplicatii pentru un client real , 
+in cazul de fata este vorba despre administratia cantinei universitatii Transilvania , in 
 continuare numit "Client".
-Clinentul are nevoie de o solutie informatica pentru a cunoaste exact cata mancare sa faca 
+Clinentul are nevoie de o solutie informatica pentru a cunoaste exact cata mancare sa prepare 
 cu o zi inainte pentru a minimiza pierderile de mancare .
 
 Pentru acest proiect am decis sa creez un website pentru studenti , unde acestia sa 
@@ -25,7 +25,7 @@ Sunt 4 tabele cu functii diferite .
 **********************
 Websiteul
 Este un site web scris in PHP care permite studentilor sa se inregistreze , logheze , 
-comande mancare  , si sa vizualizeze comenzile plasate  anterioar.
+comande mancare  , si sa vizualizeze comenzile plasate  anterior.
 
 
 **********************
