@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Settings>
+<ip>jdbc:mysql://localhost/db1</ip>
+<db_name>db</db_name>
+<username>manager_cantina</username>
+<password>SwT9HhLajd2K5zvL</password>
+</Settings>

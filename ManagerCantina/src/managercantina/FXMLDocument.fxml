@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="managercantina.FXMLDocumentController">
    <children>
       <HBox prefHeight="45.0" prefWidth="700.0">
@@ -19,7 +18,7 @@
                   <Insets right="20.0" top="10.0" />
                </HBox.margin>
             </Button>
-              <Label fx:id="label" alignment="CENTER" minHeight="16" minWidth="69" text="Eroare Fatala">
+              <Label fx:id="label" alignment="CENTER" minHeight="16" minWidth="69">
                <padding>
                   <Insets bottom="5.0" right="200.0" />
                </padding>

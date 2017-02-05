@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package managercantina;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -34,8 +37,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn<Mancare, Integer> cantitate;
 
-    
-    
     @FXML
     private Label label;
     @FXML
@@ -44,36 +45,49 @@ public class FXMLDocumentController implements Initializable {
     
     
     @FXML
-    private void handleButtonAction(ActionEvent event) throws SQLException {
-        System.out.println("You clicked me!");
-        DbConnection dbc = new DbConnection();
-        try {
-            String s = dbc.getData();
-            System.out.println(s);
+    private void handleButtonAction(ActionEvent event) throws SQLException, ParserConfigurationException, SAXException, IOException {
+        System.out.println("Button ");
+        try { 
+            String s = DbConnection.getData();
             label.setText(s);
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             label.setText("Eroare");
         }
-;
         show_table();
+        
+        
     }
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {   
-        DbConnection dbc = new DbConnection();
-        try {
-            String s = dbc.getData();
-            System.out.println(s);
-        } catch (SQLException ex) {
+    public void initialize(URL url, ResourceBundle rb)  
+    {     
+        try 
+        {
+            String s = DbConnection.getData();
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         numeMancare.setCellValueFactory(new PropertyValueFactory("numeMancare"));
         cantitate.setCellValueFactory(new PropertyValueFactory("cantitate"));
         
         try {
-            show_table();
+            try 
+            {
+                show_table();
+            } 
+            catch (SAXException | IOException | ParserConfigurationException ex) 
+            {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,11 +95,11 @@ public class FXMLDocumentController implements Initializable {
     }
 
      @FXML
-    private void show_table () throws SQLException
+    private void show_table () throws SQLException, SAXException, IOException, ParserConfigurationException
     {    
         ObservableList<Mancare> lista = FXCollections.observableArrayList();
-        DbConnection dbc = new DbConnection();
-        ResultSet rs=dbc.get_table();
+
+        ResultSet rs=DbConnection.get_table();
         while(rs.next())
         {
             lista.add(new Mancare(rs.getString("mancare"),rs.getInt("cantitate")));
