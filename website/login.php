@@ -21,7 +21,7 @@
          }
          else
          {
-             $login_msg="Datele nu corespund";
+             $login_msg="Username sau parola gresita";
          }
      }  
 ?>

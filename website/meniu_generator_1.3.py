@@ -15,8 +15,8 @@ database='db1'
 
 #datele de logare pentru a extrage meniul
 URL = 'http://portal.unitbv.ro/Default.aspx?tabid=36&ctl=Login&returnurl=%2fDefault.aspx%3ftabid%3d36'
-LOGIN = ''
-PASSWORD = ''
+LOGIN = 'gabriel.tutu@student.unitbv.ro'
+PASSWORD = 'ALIN9(Ee'
 
 #functie ce cauta tabelelu
 def get_table_soup():
@@ -110,6 +110,39 @@ def find_table_4vectors(soup):
         row4=row4[1:]
     return row1,row2,row3,row4,title1,title2,title3,title4
 
+#muie neimplementata
+def find_table_vector(soup):
+    row1=[]
+    row2=[]
+    row3=[]
+    row4=[]
+    final=[]
+    table=soup.find(attrs={"style":"border-collapse: collapse; border: medium none; width: 573px;"})
+    table=BeautifulSoup(str(table) , 'html.parser')
+    print(str(type(table)))
+    rows1=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 37px;"})
+    rows2=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 336px;"})
+    rows3=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 91px;"})
+    rows4=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 30px;"})
+    for x in rows1:
+        row=BeautifulSoup(str(x) , 'html.parser')
+        row1.append(row.text)
+    for x in rows2:
+        row=BeautifulSoup(str(x) , 'html.parser')
+        row2.append(row.text)
+    for x in rows3:
+        row=BeautifulSoup(str(x) , 'html.parser')
+        row3.append(row.text)
+    for x in rows4:
+        row=BeautifulSoup(str(x) , 'html.parser')
+        row4.append(row.text)
+
+    if len(row1)==len(row2)==len(row3)==len(row4):
+        print("succes")
+        for x in range(1,len(row1)):
+            final.append(row1[x].strip()+"   "+row2[x].strip()+"   "+ row3[x].strip()+"   "+row4[x].strip()+" lei")
+    return final
+
 
 #returneaza data din table ca string
 def get_date(soup):
@@ -169,6 +202,7 @@ def save_as_xml(a1,a2,a3,a4,t1,t2,t3,t4,t):
 
 
 #functia data sterge toate inregistrarile din tabelul meniului si introduce altele din ziua respectiva
+
 def send_to_database(date):
     nume=[]
     pret=[]
@@ -227,6 +261,7 @@ def drop_comenzi_personale():
     conn.commit()
     conn.close()
     
+
 
 
 

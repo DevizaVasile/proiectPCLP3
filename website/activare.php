@@ -3,8 +3,8 @@ require('db_connect.php');
 session_start();
 if (isset($_POST['email']) && isset($_POST['key']))
 {
-    $email = $_POST['email'];
-    $key = $_POST['key'];
+    $email= filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
+    $key= filter_var($_POST['key'],FILTER_SANITIZE_NUMBER_INT);
     $query="SELECT * FROM `users` WHERE `email` = '$email' AND `key` = '$key'";
     $result=mysqli_query($connection, $query);
     

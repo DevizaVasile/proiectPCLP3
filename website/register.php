@@ -4,7 +4,7 @@
     // If the values are posted, insert them into the database.
     if (isset($_POST['email']) && isset($_POST['password']))
     {
-	$email = $_POST['email'];
+	$email= filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
         $query_verify="SELECT * FROM `users` WHERE `email` = '$email'";
         $result_verify=mysqli_query($connection, $query_verify);
