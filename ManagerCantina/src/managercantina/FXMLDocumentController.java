@@ -11,11 +11,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -45,29 +48,38 @@ public class FXMLDocumentController implements Initializable {
     
     
     @FXML
-    private void handleButtonAction(ActionEvent event) throws SQLException, ParserConfigurationException, SAXException, IOException {
-        System.out.println("Button ");
-        try { 
+    private void handleButtonAction(ActionEvent event) throws SQLException, ParserConfigurationException, SAXException, IOException 
+    {
+        try 
+        { 
             String s = DbConnection.getData();
+            show_table();
             label.setText(s);
-        } catch (SQLException ex) {
+        } 
+        
+        catch (SQLException ex) 
+        {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             label.setText("Eroare");
         }
-        show_table();
-        
-        
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb)  
-    {     
+    {      
         try 
         {
-            String s = DbConnection.getData();
-        } 
-        catch (SQLException ex) 
-        {
+            if(DbConnection.checkConnection()==false)
+            {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Conexiunea cu baza de date nu poate fi stabilită.");
+                alert.setContentText("Verificati conexiunea la internet și/sau sau anunțati administratorul aplicației.");
+                alert.showAndWait();
+                Platform.exit();
+                System.exit(0);
+            }
+        } catch (SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,21 +89,7 @@ public class FXMLDocumentController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         numeMancare.setCellValueFactory(new PropertyValueFactory("numeMancare"));
-        cantitate.setCellValueFactory(new PropertyValueFactory("cantitate"));
-        
-        try {
-            try 
-            {
-                show_table();
-            } 
-            catch (SAXException | IOException | ParserConfigurationException ex) 
-            {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        cantitate.setCellValueFactory(new PropertyValueFactory("cantitate"));    
     }
 
      @FXML

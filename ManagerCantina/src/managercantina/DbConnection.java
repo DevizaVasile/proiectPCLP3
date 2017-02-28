@@ -82,6 +82,27 @@ public class DbConnection {
   }
   
    
-   
+  public static boolean checkConnection() throws SQLException, ParserConfigurationException, SAXException, IOException
+  {
+      boolean isOK=false;
+      try
+      {
+          DbConnection db1 = new DbConnection();
+          try
+          {
+             db1.stmt.executeQuery("SELECT 1 FROM `users`");
+              isOK=true;
+          }
+          catch (NullPointerException e)
+                  {
+                      System.out.println("Debug |class DbConn| method checkConnetion | execution query : eroare");
+                  }
+      }
+      catch (IOException | ParserConfigurationException | SAXException e)
+      {
+          System.out.println("Debug |class DbConn| method checkConnetion | Object creation debug : eroare ");
+      }
+      return isOK;
+  }
    
 }
