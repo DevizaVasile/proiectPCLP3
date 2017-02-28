@@ -7,7 +7,10 @@ package finalizarecomenzi;
 
 import java.util.ArrayList;
 import finalizarecomenzi.DbConnection.*;
+import java.io.IOException;
 import java.sql.SQLException;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -24,7 +27,7 @@ public class Comanda {
     ArrayList<String> comanda = new ArrayList<String>();
     ArrayList<String> ora_plasare = new ArrayList<String>();
     
-    Comanda(String email) throws SQLException
+    Comanda(String email) throws SQLException, ParserConfigurationException, SAXException, IOException
     {
         this.email=email;
         this.id=DbConnection.get_All_Id_By_Email(email);

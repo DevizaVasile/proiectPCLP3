@@ -20,13 +20,8 @@ import org.xml.sax.SAXException;
  */
 public class DbConnection {
     
-    Settings settings = LoadSettingsFromFile.get_settings();
-
+   Settings settings = LoadSettingsFromFile.get_settings();
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   protected static String DB_URL = "jdbc:mysql://localhost/db1";
-   protected static String USER = "root";
-   protected static String PASS = "";
-   
    Connection conn = null;
    Statement stmt = null;
       

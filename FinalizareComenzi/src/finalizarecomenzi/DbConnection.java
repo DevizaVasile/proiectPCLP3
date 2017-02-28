@@ -10,6 +10,7 @@
  */
 package finalizarecomenzi;
 
+import java.io.IOException;
 import java.sql.*;
 
 import java.sql.Connection;
@@ -19,6 +20,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -26,46 +29,32 @@ import java.util.regex.Pattern;
  */
 public class DbConnection {
 
-   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   protected static String DB_URL = "jdbc:mysql://localhost/db1";
-   protected static String USER = "root";
-   protected static String PASS = "";
-
-   
+   Settings settings = LoadSettingsFromFile.get_settings();
+   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
    Connection conn = null;
    Statement stmt = null;
       
-  DbConnection()
+  DbConnection() throws ParserConfigurationException, SAXException, IOException
   {
       this.conn = null;
       this.stmt = null;
       
       try
       {
-      //STEP 2: Register JDBC driver
       Class.forName("com.mysql.jdbc.Driver");
-
-      //STEP 3: Open a connection
-      this.conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-      //STEP 4: Execute a query
+      this.conn = DriverManager.getConnection(this.settings.getIp(),this.settings.getUsername(),this.settings.getPassword());
       this.stmt = this.conn.createStatement();
       }
-      
       catch(SQLException se)
       {
-      //Handle errors for JDBC
-      se.printStackTrace();
       }
       
-      catch(Exception e)
+      catch(ClassNotFoundException e)
       {
-      //Handle errors for Class.forName
-      e.printStackTrace();
       }    
   }
   
-  public  ResultSet get_table() throws SQLException
+  public  ResultSet get_table() throws SQLException, ParserConfigurationException, SAXException, IOException
   {
       DbConnection db1 = new DbConnection();
       return db1.stmt.executeQuery("SELECT * FROM `comenzi_personale`");
@@ -88,7 +77,7 @@ public class DbConnection {
       }
   }
   
-   static public ArrayList<Integer> get_All_Id_By_Email(String email) throws SQLException
+   static public ArrayList<Integer> get_All_Id_By_Email(String email) throws SQLException, ParserConfigurationException, SAXException, IOException
   {
       DbConnection db1 = new DbConnection();
       ArrayList<Integer> lista=new ArrayList<Integer>();
@@ -100,7 +89,7 @@ public class DbConnection {
       return (lista);
   }
   
-  static public ArrayList<String> get_Comanda_By_Id(int id) throws SQLException
+  static public ArrayList<String> get_Comanda_By_Id(int id) throws SQLException, ParserConfigurationException, SAXException, IOException
   {
      DbConnection db1 = new DbConnection();
      ArrayList<String> lista=new ArrayList<String>();
@@ -143,7 +132,7 @@ public class DbConnection {
      return lista;
   }
    
-  static public int get_Status_By_Id(int id) throws SQLException
+  static public int get_Status_By_Id(int id) throws SQLException, ParserConfigurationException, SAXException, IOException
   { 
       DbConnection db1 = new DbConnection();
       ResultSet rs= db1.stmt.executeQuery("SELECT `status` FROM `comenzi_personale` WHERE `id` ="+id);
@@ -155,7 +144,7 @@ public class DbConnection {
        return temp;    
   }
   
-  static public int update_Status(int id) throws SQLException
+  static public int update_Status(int id) throws SQLException, ParserConfigurationException, SAXException, IOException
   {
       DbConnection db1 = new DbConnection();
        int rs = db1.stmt.executeUpdate("UPDATE `comenzi_personale` SET `status` = '1' WHERE `comenzi_personale`.`id`="+id);
@@ -163,7 +152,7 @@ public class DbConnection {
       
   }
    
-  public static boolean check_If_Email_Exists(String email) throws SQLException
+  public static boolean check_If_Email_Exists(String email) throws SQLException, ParserConfigurationException, SAXException, IOException
   {
        DbConnection db1 = new DbConnection();
        ResultSet rs = db1.stmt.executeQuery("SELECT * FROM `comenzi_personale` WHERE `email` = '"+email+"'");
@@ -179,7 +168,7 @@ public class DbConnection {
   
   }
 
-  static public String get_Date_By_ID(int id) throws SQLException
+  static public String get_Date_By_ID(int id) throws SQLException, ParserConfigurationException, SAXException, IOException
   {
      DbConnection db1 = new DbConnection();
       ResultSet rs= db1.stmt.executeQuery("SELECT `ora_plasare` FROM `comenzi_personale` WHERE `id` ="+id);
@@ -189,6 +178,29 @@ public class DbConnection {
           temp = rs.getString("ora_plasare");
       }
        return temp;  
+  }
+  
+   public static boolean checkConnection() throws SQLException, ParserConfigurationException, SAXException, IOException
+  {
+      boolean isOK=false;
+      try
+      {
+          DbConnection db1 = new DbConnection();
+          try
+          {
+             db1.stmt.executeQuery("SELECT 1 FROM `users`");
+              isOK=true;
+          }
+          catch (NullPointerException e)
+                  {
+                      System.out.println("Debug |class DbConn| method checkConnetion | execution query : eroare");
+                  }
+      }
+      catch (IOException | ParserConfigurationException | SAXException e)
+      {
+          System.out.println("Debug |class DbConn| method checkConnetion | Object creation debug : eroare ");
+      }
+      return isOK;
   }
 
 

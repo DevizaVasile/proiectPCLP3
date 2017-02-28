@@ -6,11 +6,13 @@
 package finalizarecomenzi;
 
 import finalizarecomenzi.DbConnection.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +27,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -68,7 +72,7 @@ public class FXMLDocumentController implements Initializable {
         input.clear();
     }
 
-    @FXML public void handleMouseClick(MouseEvent arg0) throws SQLException 
+    @FXML public void handleMouseClick(MouseEvent arg0) throws SQLException, ParserConfigurationException, SAXException, IOException 
     {
         System.out.println("clicked on " + lista_view.getSelectionModel().getSelectedItem());
         String selected_item=lista_view.getSelectionModel().getSelectedItem();
@@ -86,7 +90,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void findUser(ActionEvent event) throws SQLException {
+    private void findUser(ActionEvent event) throws SQLException, ParserConfigurationException, SAXException, IOException {
         ObservableList<String> lista = FXCollections.observableArrayList();
         if(input.getText() != null && !input.getText().isEmpty())
         {
@@ -153,7 +157,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML 
-    public void finalizareComanda(ActionEvent event) throws SQLException
+    public void finalizareComanda(ActionEvent event) throws SQLException, ParserConfigurationException, SAXException, IOException
     {
       String selected=this.selected;
       Comanda order = new Comanda(this.email);
@@ -174,10 +178,25 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
      
-        try {
-            Comanda x = new Comanda("cococo@gmail.com");
-            x.representatnion();
+        try 
+        {
+            if(DbConnection.checkConnection()==false)
+            {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Conexiunea cu baza de date nu poate fi stabilită.");
+                alert.setContentText("Verificati conexiunea la internet și/sau sau anunțati administratorul aplicației.");
+                alert.showAndWait();
+                Platform.exit();
+                System.exit(0);
+            }
         } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
