@@ -104,30 +104,44 @@ if (isset($_POST['email']) && isset($_POST['key']))
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1 >Pentru a activa contul introduceti mailul institutional si codul trimis pe mailul institutional</h1>
-                
-<div class="container" style=" width:50%;">
+                <h3  class="header">Pentru a activa contul introduceti mailul institutional si codul trimis pe mailul institutional</h3>     
+
+                <div class="container ">
     
-     <div class="row">
-     <div class="col-lg-12 text-center">
-      <form class="form-signin" method="POST">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus style="width:40%">
-        <label for="inputPassword" class="sr-only">Cod de activare</label>
-        <input type="text" name="key" id="key" class="form-control" placeholder="key" required style="width:40%">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;width: 20%;">Activare</button>
+ 
+     <div class="text-center ">
+      <form class="form-signin form-horizontal" method="POST">
+        
+        <div class="form-group">
+        <div class="col-sm-4">
+        <label for="inputEmail" >Email address</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        </div> 
+        </div>
+          
+        <div class="form-group">
+        <div class="col-sm-4">
+        <label for="inputPassword">Cod de activare</label>
+        <input type="text" name="key" id="key" class="form-control" placeholder="key" >
+        </div>
+        </div>
+          
+          
+          <div class="form-group">
+              <div class="col-sm-4">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Activare</button>
+              </div>
+          </div>
       </form>
          <?php if(isset($msg)){ ?><div class="alert alert-success" role="alert"> <?php echo $msg; ?> </div><?php } ?>
      </div>
-     </div>
+
 </div>
       
             </div>
         </div>
-        <!-- /.row -->
 
     </div>
-    <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery.js"></script>

@@ -24,7 +24,7 @@
             $aaa=mail("user@localhost", "Activare cont cantina", $key, $headers);     
             if($result)
                 {
-                    $smsg = "Cont creat cu succes, am trimis un mail pe $email cu un cod de activare.";
+                    $smsg = "Cont creat cu succes, am trimis un mail pe $email ce contine codul de activare.";
                 }
              else
                  {
@@ -95,6 +95,7 @@
                     <?php if(isset($_SESSION['username'])){  ?> <li><a href="comanda.php">Comanda acum</a></li><?php } ?>
                     <?php if(isset($_SESSION['username'])){  ?> <li><a href="comenzile_mele.php">Comaenzi active</a></li><?php } ?>
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="login.php">Log in</a><?php } ?>
+                    <?php if(!isset($_SESSION['username'])){  ?> <li><a href="activare.php">Activare cont</a><?php } ?>
                     <?php if(isset($_SESSION['username'])){  ?><?php } ?>
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="register.php">Inregistrare</a><?php } ?>
                     <li><a href="#">Contact</a></li>
@@ -111,22 +112,45 @@
     <!-- Page Content -->
   
     
-<div class="container" style=" width:50%">
-      <form class="form-signin" method="POST">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus style="width:40%">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required style="width:40%">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;width: 20%;">Register</button>
+<div class="container">
+      <form class="form-signin form-horizontal" method="POST">
+          
+          <div class="form-group">
+        <label for="inputEmail">Email address</label>
+              <div class="col-sm-4">
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"   >
+              </div>
+          </div>
+          
+          <div class="form-group">
+        <label for="inputPassword">Password</label>
+            <div class="col-sm-4">
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" >
+            </div>
+         </div>
+          
+          <div class="form-group">
+        <label for="inputPassword">Password</label>
+            <div class="col-sm-4">
+            <input type="password2" name="password2" id="inputPassword2" class="form-control" placeholder="Re-enter password" >
+            </div>
+         </div>
+          
+          <div class="form-group col-sm-4">
+          <button class="btn btn-lg btn-primary btn-block" type="submit" >Register</button>
+          </div>
+
       </form>
-    <a href="activare.php" class="btn btn-lg btn-primary btn-block" style="margin-top: 10px;width: 25%;">Fereastra de activare</a>
-</div>
+    
+     
+     
+
     
 
-      <?php if(isset($smsg)){       ?><div class="alert alert-success" role="alert"> <?php echo $smsg; ?> </div><?php } ?>
+      <?php if(isset($smsg)){       ?><div class="alert alert-success" role="alert">  <?php echo $smsg; ?> <a href="activare.php">Click aici pentru activare</a> </div><?php } ?>
       <?php if(isset($fmsg)){       ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?> </div><?php } ?>
       <?php if(isset($wrong_mail)){ ?><div class="alert alert-danger" role="alert"> <?php echo $wrong_mail; ?> </div><?php } ?>
-
+</div>
     <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->

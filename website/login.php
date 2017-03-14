@@ -70,6 +70,7 @@
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="login.php">Log in</a><?php } ?>
                     <?php if(isset($_SESSION['username'])){  ?><?php } ?>
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="register.php">Inregistrare</a><?php } ?>
+                    <?php if(!isset($_SESSION['username'])){  ?> <li><a href="activare.php">Activare cont</a><?php } ?>    
                     <li><a href="#">Contact</a></li>
                     <li><?php if(isset($_SESSION['username'])){  ?><div style="margin-top: 5%" class="list-group-item" > <?php echo $_SESSION['username']; ?> </div><?php } ?></li>
                     <li><?php if(isset($_SESSION['username'])){  ?><div style="margin-top: 10%" class="list-group-item" > <form method="POST" action="logout.php" ><button type="submit"> Log out</button></form> </div><?php } ?></li>
@@ -83,21 +84,33 @@
 
 
 
-<div class="container" style=" width:50%;">
-    
-     <div class="row">
-     <div class="col-lg-12 text-center">
-      <form class="form-signin" method="POST">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus style="width:40%">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required style="width:40%">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;width: 20%;">Log in</button>
+<div class="container" >
+      
+      <form class="form-signin " method="POST">
+          
+          <div class="form-group ">
+        <label for="inputEmail" class="control-label">Email address</label>
+        <div class="col-sm-4">
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus >
+        </div>
+        </div>
+          
+          <div class="form-group">
+        <label for="inputPassword" class="control-label" >Password</label>
+         <div class="col-sm-4">
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" >
+         </div> 
+          </div>
+          
+          <div class=" form-group">
+               <div class="col-sm-4">
+        <button  class="btn btn-lg btn-primary btn-block center-block" type="submit" style="margin-top: 20px;">Log in</button>
+               </div>
+          </div>
       </form>
           <?php if(isset($login_mgs)){       ?><div class="alert alert-danger" role="alert" style="margin-top: 10px;width: 20%;"> <?php echo $login_mgs; ?> </div><?php } ?>
-     </div>
-     </div>
-</div>
+    </div>
+
 
 <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery.js"></script>
