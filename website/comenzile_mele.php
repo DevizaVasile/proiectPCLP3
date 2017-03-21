@@ -47,7 +47,8 @@
 <body>
 
    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Navigation -->
+     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -67,7 +68,8 @@
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="login.php">Log in</a><?php } ?>
                     <?php if(isset($_SESSION['username'])){  ?><?php } ?>
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="register.php">Inregistrare</a><?php } ?>
-                    <li><a href="#">Contact</a></li>
+                    <?php if(!isset($_SESSION['username'])){  ?> <li><a href="activare.php">Activare cont</a><?php } ?>
+                    <li><a href="about.php">Contact</a></li>
                     <li><?php if(isset($_SESSION['username'])){  ?><div style="margin-top: 5%" class="list-group-item" > <?php echo $_SESSION['username']; ?> </div><?php } ?></li>
                     <li><?php if(isset($_SESSION['username'])){  ?><div style="margin-top: 10%" class="list-group-item" > <form method="POST" action="logout.php" ><button type="submit"> Log out</button></form> </div><?php } ?></li>
                     

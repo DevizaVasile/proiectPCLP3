@@ -1,40 +1,57 @@
 <?php
 	require('db_connect.php');
         session_start();
-    // If the values are posted, insert them into the database.
-    if (isset($_POST['email']) && isset($_POST['password']))
+
+    if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2']) && isset($_POST['captcha_code']))
     {
-	$email= filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
-        $password = $_POST['password'];
-        $query_verify="SELECT * FROM `users` WHERE `email` = '$email'";
-        $result_verify=mysqli_query($connection, $query_verify);
-        if($result_verify->num_rows > 0)
+	$email=filter_var($_POST['email'],FILTER_SANITIZE_EMAIL);
+        $password=filter_var($_POST['password'],FILTER_SANITIZE_STRING);
+        $password2=filter_var($_POST['password2'],FILTER_SANITIZE_STRING);
+        $kap=filter_var($_POST['captcha_code'],FILTER_SANITIZE_STRING);
+          
+        if($password==$password2)
         {
-            $wrong_mail="Aceasta adresa de e-mail e folosita .";
-        }
-        
-        else
-        {
-            $key= (string)rand(10000000, 99999999);         
-            $query ="INSERT INTO `users` (`userID`, `email`, `password`, `reg_date`, `active`, `key`) VALUES (NULL, '$email', '$password', CURRENT_TIMESTAMP, '0', '$key')";
-            $result = mysqli_query($connection, $query);   
-         
-            
-            $headers = 'From: webmaster@example.com' . "\r\n" .  'Reply-To: webmaster@example.com';
-            $aaa=mail("user@localhost", "Activare cont cantina", $key, $headers);     
-            if($result)
-                {
-                    $smsg = "Cont creat cu succes, am trimis un mail pe $email ce contine codul de activare.";
-                }
-             else
+            if(preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$#", $password))
+            { echo $kap . "<>". $_SESSION["captcha_code"];
+                 if(strcasecmp($_SESSION['captcha_code'], $kap) == 0) 
                  {
-            $fmsg ="Date introduse gresit";
-                }
+                     $query_verify="SELECT * FROM `users` WHERE `email` = '$email'";
+                     $result_verify=mysqli_query($connection, $query_verify);
+                     if($result_verify->num_rows == 0)
+                     {
+                            $key= (string)rand(10000000, 99999999);         
+                            $query ="INSERT INTO `users` (`userID`, `email`, `password`, `reg_date`, `active`, `key`) VALUES (NULL, '$email', '$password', CURRENT_TIMESTAMP, '0', '$key')";
+                            $result = mysqli_query($connection, $query); 
+                            $headers = 'From: webmaster@example.com' . "\r\n" .  'Reply-To: webmaster@example.com';
+                            $aaa=mail("user@localhost", "Activare cont cantina", $key, $headers);   
+                            if($result)
+                                {
+                                    $smsg = "Cont creat cu succes, am trimis un mail pe $email ce contine codul de activare.";
+                                }
+                     }
+                     else
+                     {
+                         $fmsg="Exista deja un cont cu acest e-mail.";
+                     }
+                 }
+                 else
+                 {  
+                     $fmsg="Captcha gresit."; 
+                 } 
+            }
+            else
+            {
+                $fmsg="Parola trebuie sa contina minum : un numar , o litera mare , o litera mica si un simbol special."; 
+            }
         }
-            
-        
- 
-        
+        else 
+        {
+            $fmsg="Parolele introduse nu sunt identice.";
+        }       
+    }
+    else
+    {
+        $fmsg="Toate campurile sunt obligatorii.";
     }
     ?>
 
@@ -53,7 +70,14 @@
     <meta name="author" content="">
 
     <title>Unitbv.ro</title>
-
+    <link href="./css/style.css" rel="stylesheet">
+    <script type='text/javascript'>
+        function refreshCaptcha()
+        {
+	var img = document.images['captchaimg'];
+	img.src = img.src.substring(0,img.src.lastIndexOf("?"))+"?rand="+Math.random()*1000;
+        }
+    </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -77,7 +101,7 @@
 <body>
 
    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -95,10 +119,10 @@
                     <?php if(isset($_SESSION['username'])){  ?> <li><a href="comanda.php">Comanda acum</a></li><?php } ?>
                     <?php if(isset($_SESSION['username'])){  ?> <li><a href="comenzile_mele.php">Comaenzi active</a></li><?php } ?>
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="login.php">Log in</a><?php } ?>
-                    <?php if(!isset($_SESSION['username'])){  ?> <li><a href="activare.php">Activare cont</a><?php } ?>
                     <?php if(isset($_SESSION['username'])){  ?><?php } ?>
                     <?php if(!isset($_SESSION['username'])){  ?> <li><a href="register.php">Inregistrare</a><?php } ?>
-                    <li><a href="#">Contact</a></li>
+                    <?php if(!isset($_SESSION['username'])){  ?> <li><a href="activare.php">Activare cont</a><?php } ?>
+                    <li><a href="about.php">Contact</a></li>
                     <li><?php if(isset($_SESSION['username'])){  ?><div style="margin-top: 5%" class="list-group-item" > <?php echo $_SESSION['username']; ?> </div><?php } ?></li>
                     <li><?php if(isset($_SESSION['username'])){  ?><div style="margin-top: 10%" class="list-group-item" > <form method="POST" action="logout.php" ><button type="submit"> Log out</button></form> </div><?php } ?></li>
                     
@@ -130,26 +154,35 @@
          </div>
           
           <div class="form-group">
-        <label for="inputPassword">Password</label>
+        <label for="inputPassword2">Password</label>
             <div class="col-sm-4">
-            <input type="password2" name="password2" id="inputPassword2" class="form-control" placeholder="Re-enter password" >
+            <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Re-enter password" >
             </div>
          </div>
           
+           <img src="captcha.php?rand=<?php echo rand();?>" id='captchaimg'>
+           
+          
+          <div class="form-group">
+               <label for="inputCaptcha">Captcha</label>
+               <div class="col-sm-4">
+            <input type="text" name="captcha_code" id="captcha_code" class="form-control" placeholder="Enter ccaptcha" >
+            </div>
+          </div>
+           
+            <br>
+            <p>Can't read the image? click <a href='javascript: refreshCaptcha();'>here</a> to refresh.</p>
+          
           <div class="form-group col-sm-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit" >Register</button>
+          <button class="btn btn-lg btn-primary btn-block" name="Submit" type="submit" onclick="return validate();" value="Submit" >Register</button>
           </div>
 
       </form>
     
-     
-     
+      <?php if(isset($smsg)){       ?>  <div class="alert alert-success col-sm-10 center-block" role="alert">  <?php echo $smsg; ?> <a href="activare.php">Click aici pentru activare</a> </div><?php } ?>
+      <?php if(isset($fmsg)){       ?><div class="alert alert-danger col-sm-10" role="alert"> <?php echo $fmsg; ?> </div><?php } ?>
 
-    
-
-      <?php if(isset($smsg)){       ?><div class="alert alert-success" role="alert">  <?php echo $smsg; ?> <a href="activare.php">Click aici pentru activare</a> </div><?php } ?>
-      <?php if(isset($fmsg)){       ?><div class="alert alert-danger" role="alert"> <?php echo $fmsg; ?> </div><?php } ?>
-      <?php if(isset($wrong_mail)){ ?><div class="alert alert-danger" role="alert"> <?php echo $wrong_mail; ?> </div><?php } ?>
+      
 </div>
     <!-- /.container -->
 
