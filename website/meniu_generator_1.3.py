@@ -51,9 +51,9 @@ def find_table_4vectors(soup):
     print(str(type(table)))
 
     rows1=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 33.6364px;"})
-    rows2=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 336px;"})
-    rows3=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 91px;"})
-    rows4=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 30px;"})
+    rows2=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 340px;"})
+    rows3=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 90px;"})
+    rows4=table.findAll(attrs={"style":"border-style: solid solid solid none; border-width: 1pt 1pt 1pt medium; padding: 0in 5.4pt; width: 31px;"})
     for x in rows1:
         row=BeautifulSoup(str(x) , 'html.parser')
         row=row.text
